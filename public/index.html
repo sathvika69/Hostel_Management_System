@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Page -->
+        <div id="loginPage" class="page active">
+            <div class="container">
+                <div class="auth-card">
+                    <h1>Hostel Management System</h1>
+                    <h2>Login</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="loginEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                        <p class="auth-link">Don't have an account? <a href="#" onclick="showPage('registerPage')">Register</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register Page -->
+        <div id="registerPage" class="page">
+            <div class="container">
+                <div class="auth-card">
+                    <h1>Hostel Management System</h1>
+                    <h2>Register</h2>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" id="registerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="registerEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="registerPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Role</label>
+                            <select id="registerRole" required>
+                                <option value="student">Student</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="studentFields">
+                            <label>Student ID</label>
+                            <input type="text" id="registerStudentId">
+                        </div>
+                        <div class="form-group" id="studentFields">
+                            <label>Contact</label>
+                            <input type="text" id="registerContact">
+                        </div>
+                        <div class="form-group" id="studentFields">
+                            <label>Gender</label>
+                            <select id="registerGender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                        <p class="auth-link">Already have an account? <a href="#" onclick="showPage('loginPage')">Login</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Dashboard -->
+        <div id="studentDashboard" class="page">
+            <nav class="navbar">
+                <h2>Hostel Management System</h2>
+                <div class="nav-user">
+                    <span id="studentName"></span>
+                    <button onclick="logout()" class="btn btn-secondary">Logout</button>
+                </div>
+            </nav>
+            <div class="container">
+                <div class="dashboard-tabs">
+                    <button class="tab-btn active" onclick="showStudentTab('dashboard')">Dashboard</button>
+                    <button class="tab-btn" onclick="showStudentTab('request')">Request Room</button>
+                    <button class="tab-btn" onclick="showStudentTab('complaints')">Complaints</button>
+                </div>
+
+                <!-- Student Dashboard Tab -->
+                <div id="studentDashboardTab" class="tab-content active">
+                    <h2>My Dashboard</h2>
+                    <div id="studentRoomInfo" class="card">
+                        <h3>Room Allocation</h3>
+                        <div id="roomAllocationDetails"></div>
+                    </div>
+                    <div id="studentComplaintsSummary" class="card">
+                        <h3>My Complaints</h3>
+                        <div id="complaintsSummary"></div>
+                    </div>
+                </div>
+
+                <!-- Request Room Tab -->
+                <div id="studentRequestTab" class="tab-content">
+                    <h2>Request Room</h2>
+                    <div class="card">
+                        <form id="roomRequestForm">
+                            <div class="form-group">
+                                <label>Select Hostel</label>
+                                <select id="requestHostel" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Room Type (Optional)</label>
+                                <select id="requestRoomType">
+                                    <option value="">Any</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Double">Double</option>
+                                    <option value="Triple">Triple</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Request</button>
+                        </form>
+                    </div>
+                    <div class="card">
+                        <h3>My Requests</h3>
+                        <div id="myRequests"></div>
+                    </div>
+                </div>
+
+                <!-- Complaints Tab -->
+                <div id="studentComplaintsTab" class="tab-content">
+                    <h2>Submit Complaint</h2>
+                    <div class="card">
+                        <form id="complaintForm">
+                            <div class="form-group">
+                                <label>Room</label>
+                                <select id="complaintRoom" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select id="complaintCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Plumbing">Plumbing</option>
+                                    <option value="Electricity">Electricity</option>
+                                    <option value="Cleaning">Cleaning</option>
+                                    <option value="Furniture">Furniture</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="complaintDescription" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Complaint</button>
+                        </form>
+                    </div>
+                    <div class="card">
+                        <h3>My Complaints</h3>
+                        <div id="myComplaints"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" class="page">
+            <nav class="navbar">
+                <h2>Hostel Management System - Admin</h2>
+                <div class="nav-user">
+                    <span id="adminName"></span>
+                    <button onclick="logout()" class="btn btn-secondary">Logout</button>
+                </div>
+            </nav>
+            <div class="container">
+                <div class="dashboard-tabs">
+                    <button class="tab-btn active" onclick="showAdminTab('dashboard')">Dashboard</button>
+                    <button class="tab-btn" onclick="showAdminTab('hostels')">Hostels</button>
+                    <button class="tab-btn" onclick="showAdminTab('rooms')">Rooms</button>
+                    <button class="tab-btn" onclick="showAdminTab('requests')">Room Requests</button>
+                    <button class="tab-btn" onclick="showAdminTab('complaints')">Complaints</button>
+                </div>
+
+                <!-- Admin Dashboard Tab -->
+                <div id="adminDashboardTab" class="tab-content active">
+                    <h2>Reports Dashboard</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Total Hostels</h3>
+                            <p id="statTotalHostels">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Total Rooms</h3>
+                            <p id="statTotalRooms">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Available Rooms</h3>
+                            <p id="statAvailableRooms" class="green">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Occupied Rooms</h3>
+                            <p id="statOccupiedRooms" class="red">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Pending Requests</h3>
+                            <p id="statPendingRequests" class="yellow">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Active Complaints</h3>
+                            <p id="statActiveComplaints" class="yellow">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hostels Tab -->
+                <div id="adminHostelsTab" class="tab-content">
+                    <h2>Manage Hostels</h2>
+                    <div class="card">
+                        <h3>Add New Hostel</h3>
+                        <form id="addHostelForm">
+                            <div class="form-group">
+                                <label>Hostel Name</label>
+                                <input type="text" id="hostelName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Type</label>
+                                <select id="hostelType" required>
+                                    <option value="Boys">Boys</option>
+                                    <option value="Girls">Girls</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Rooms</label>
+                                <input type="number" id="hostelTotalRooms" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <textarea id="hostelAddress" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Hostel</button>
+                        </form>
+                    </div>
+                    <div class="card">
+                        <h3>All Hostels</h3>
+                        <div id="hostelsList"></div>
+                    </div>
+                </div>
+
+                <!-- Rooms Tab -->
+                <div id="adminRoomsTab" class="tab-content">
+                    <h2>Manage Rooms</h2>
+                    <div class="card">
+                        <h3>Add New Room</h3>
+                        <form id="addRoomForm">
+                            <div class="form-group">
+                                <label>Hostel</label>
+                                <select id="roomHostel" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Room Number</label>
+                                <input type="text" id="roomNumber" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Room Type</label>
+                                <select id="roomType" required>
+                                    <option value="Single">Single</option>
+                                    <option value="Double">Double</option>
+                                    <option value="Triple">Triple</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Capacity</label>
+                                <input type="number" id="roomCapacity" required min="1">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Room</button>
+                        </form>
+                    </div>
+                    <div class="card">
+                        <h3>All Rooms</h3>
+                        <div id="roomsList"></div>
+                    </div>
+                </div>
+
+                <!-- Requests Tab -->
+                <div id="adminRequestsTab" class="tab-content">
+                    <h2>Room Requests</h2>
+                    <div class="card">
+                        <h3>Pending Requests</h3>
+                        <div id="pendingRequests"></div>
+                    </div>
+                </div>
+
+                <!-- Complaints Tab -->
+                <div id="adminComplaintsTab" class="tab-content">
+                    <h2>Complaint Tracker</h2>
+                    <div class="card">
+                        <h3>All Complaints</h3>
+                        <div id="allComplaints"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
