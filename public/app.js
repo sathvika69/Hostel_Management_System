@@ -1,4 +1,5 @@
-const API_BASE = 'http://localhost:3000/api';
+// Use same-origin API so it works on both localhost and deployed environments.
+const API_BASE = '/api';
 
 let currentUser = null;
 let authToken = null;
